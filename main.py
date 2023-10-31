@@ -30,7 +30,7 @@ def main():
     )
     ''')
 
-    print("what would you like to do.")
+    print("What would you like to do.")
     print("Enter 1 to input information")
     print("Enter 2 to search for information")
     task_to_do = input("What do you want to, Enter your choice:")
