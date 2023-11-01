@@ -73,7 +73,7 @@ def main():
         print("Enter 4 to search for tasks with a certain name")
         print("Enter 5 to search for tasks with a certain tag")
         print("Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)")
-        task_to_do = input("What do you want to, Enter your choice:")
+        task_to_do = input("What do you want to do, Enter your choice:")
 
         if(task_to_do == "1"):
             # Search the database based on user input
@@ -144,7 +144,13 @@ def main():
         if search_results:
             print("Search Results:")
             for result in search_results:
-                print(result)
+                print("ID:", result[0])
+                print("Date of Task:", result[1])
+                print("Start Time of Task:", result[2])
+                print("End Time of Task:", result[3])
+                print("Task Name:", result[4])
+                print("Task Tag:", result[5])
+                print("------------------------------")
         else:
             print("No results found for the search criteria.")
 
