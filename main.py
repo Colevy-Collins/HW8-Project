@@ -6,7 +6,6 @@ def verify_date(date):
     if re.match(r'^\d{4}-\d{2}-\d{2}$', date):
         return True
     return False
-
 # Function to verify time format
 def verify_time(time):
     if re.match(r'^([01]\d|2[0-3]):([0-5]\d)$', time):
@@ -33,7 +32,7 @@ def main():
     print("What would you like to do.")
     print("Enter 1 to input information")
     print("Enter 2 to search for information")
-    task_to_do = input("What do you want to, Enter your choice:")
+    task_to_do = input("What do you want to, Enter your choice 1 - 2:")
     # Get user input and verify
     if(task_to_do == "1"):
         date_of_task = input("Enter date (YYYY-MM-DD): ")
@@ -73,7 +72,7 @@ def main():
         print("Enter 4 to search for tasks with a certain name")
         print("Enter 5 to search for tasks with a certain tag")
         print("Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)")
-        task_to_do = input("What do you want to do, Enter your choice:")
+        task_to_do = input("What do you want to do, Enter your choice 1 - 6:")
 
         if(task_to_do == "1"):
             # Search the database based on user input
