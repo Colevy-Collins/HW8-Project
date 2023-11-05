@@ -65,7 +65,7 @@ def main():
     elif(task_to_do == "2"):
         cursor = ""
 
-        print("what would you like to do.")
+        print("What would you like to do.")
         print("Enter 1 to search for tasks on a date")
         print("Enter 2 to search for tasks that start at a certain time (in military time / 24 base)")
         print("Enter 3 to search for tasks that end at a certain time (in military time / 24 base)")
