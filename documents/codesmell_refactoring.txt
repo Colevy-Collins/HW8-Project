@@ -4,5 +4,5 @@ refactoring: Use a state that will provide diffrent functions to users when sele
 Code smell: switch statment line 77 to 123
 refacroring: Use a stratigy that will switch the algorithim when prompted to. 
 
-Code smell: Duplicate code lines 37 to 37
+Code smell: Duplicate code lines 37 to 137
 refactoring: Extract duplicate code into classes
