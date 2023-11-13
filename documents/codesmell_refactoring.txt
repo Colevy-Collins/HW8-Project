@@ -1,4 +1,4 @@
-Code smell: if else line 37 to 65
+Code smell: if else line 37 to 65and 4 to 29
 refactoring: Use a state that will provide diffrent functions to users when selected
 
 Code smell: switch statment line 77 to 123
