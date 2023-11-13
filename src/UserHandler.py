@@ -1,4 +1,4 @@
-class User_Handler(object):
+class UserHandler(object):
 
     def __init__(self, input_handler, search_handler, input_verifier):
         self.choice = ""
@@ -20,7 +20,10 @@ class User_Handler(object):
         self.provide_options()
 
     def provide_options(self):
-        if self.choice == "1": self.input_handler.take_task()
-        elif self.choice == "2": self.search_handler.take_search()
-        else: self.take_choice()
+        options = {
+            "1": self.input_handler.take_task,
+            "2": self.search_handler.take_task,
+        }
 
+        selected_option = options.get(self.choice)
+        selected_option()

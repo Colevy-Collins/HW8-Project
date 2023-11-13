@@ -6,3 +6,11 @@ refacroring: Use a stratigy that will switch the algorithim when prompted to.
 
 Code smell: Duplicate code lines 37 to 137
 refactoring: Extract duplicate code into classes
+
+Second round:
+
+Code smell: if else - User_Handler lines 22 - 25, Input_Verifyer 15 -35, Search_handler 23 - 111
+refacroring:
+
+Code smell: duplicate code Search_handler lines 30 -93
+refacroring: extract method

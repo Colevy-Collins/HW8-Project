@@ -1,9 +1,9 @@
 import sqlite3
 
-from src.Input_Handler import Input_Handler
-from src.Input_Verifier import Input_Verifier
-from src.Search_Handler import Search_Handler
-from src.User_Handler import User_Handler
+from src.InputHandler import InputHandler
+from src.InputVerifier import InputVerifier
+from src.SearchHandler import SearchHandler
+from src.UserHandler import UserHandler
 
 def main():
     # Create a new database or connect to an existing one
@@ -21,10 +21,10 @@ def main():
     )
     ''')
     
-    input_verifier = Input_Verifier()
-    input_handler = Input_Handler(connection, input_verifier)
-    search_handler = Search_Handler(connection, input_verifier)
-    user_handler = User_Handler(input_handler, search_handler, input_verifier)
+    input_verifier = InputVerifier()
+    input_handler = InputHandler(connection, input_verifier)
+    search_handler = SearchHandler(connection, input_verifier)
+    user_handler = UserHandler(input_handler, search_handler, input_verifier)
 
     user_handler.take_choice()
 

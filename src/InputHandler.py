@@ -1,4 +1,4 @@
-class Input_Handler(object):
+class InputHandler(object):
 
     def __init__(self, connection, input_verifier):
         self.date_of_task = ""
