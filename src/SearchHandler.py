@@ -5,6 +5,8 @@ class SearchOption:
         self.connection = connection
         self.input_verifier = input_verifier
         self.cursor = None
+        self.to_search = []
+        self.db_value_name = []
 
     def search_and_print_results(self):
         # Fetch and print the search results
@@ -23,6 +25,23 @@ class SearchOption:
         else:
             print("No results found for the search criteria.")
 
+    def query_DB(self, to_search, db_value_names):
+        self.to_search.extend(to_search)
+        self.db_value_name.extend(db_value_names)
+        if len(self.to_search) == 1:
+            conditions = f"{self.db_value_name[0]} = ?"
+        else:
+            conditions = f"{self.db_value_name[0]} = ?"
+            conditions += ''.join(f" AND {name} = ?" for name in self.db_value_name[1:])
+
+        query = f'''
+        SELECT * FROM tasks WHERE {conditions}
+        '''
+
+        self.cursor = self.connection.execute(query, tuple(self.to_search))
+        self.search_and_print_results()
+
+
 class DateSearchOption(SearchOption):
     def search(self):
         search_date = input("Enter the date you want to search for (YYYY-MM-DD): ")
@@ -30,11 +49,7 @@ class DateSearchOption(SearchOption):
             print("Invalid date format. Please use the format YYYY-MM-DD.")
             search_date = input("Enter the date you want to search for (YYYY-MM-DD): ")
 
-        # Query the database based on the user input
-        self.cursor = self.connection.execute('''
-        SELECT * FROM tasks WHERE date_of_task = ?
-        ''', (search_date,))
-        self.search_and_print_results()
+        self.query_DB([search_date], ["date_of_task"])
 
 class StartTimeSearchOption(SearchOption):
     def search(self):
@@ -43,11 +58,7 @@ class StartTimeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_time = input(f"Enter the start time you want to search for (HH:MM): ")
 
-        # Query the database based on the user input
-        self.cursor = self.connection.execute(f'''
-        SELECT * FROM tasks WHERE start_time_of_task = ?
-        ''', (search_time,))
-        self.search_and_print_results()
+        self.query_DB([search_time], ["start_time_of_task"])
 
 class EndTimeSearchOption(SearchOption):
     def search(self):
@@ -56,31 +67,19 @@ class EndTimeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_time = input(f"Enter the end time you want to search for (HH:MM): ")
 
-        # Query the database based on the user input
-        self.cursor = self.connection.execute(f'''
-        SELECT * FROM tasks WHERE end_time_of_task = ?
-        ''', (search_time,))
-        self.search_and_print_results()
+        self.query_DB([search_time], ["end_time_of_task"])
 
 class NameSearchOption(SearchOption):
     def search(self):
         search_task_name = input("Enter the task name you want to search for: ")
 
-        # Query the database based on the user input
-        self.cursor = self.connection.execute('''
-        SELECT * FROM tasks WHERE task_name = ?
-        ''', (search_task_name,))
-        self.search_and_print_results()
+        self.query_DB([search_task_name], ["task_name"])
 
 class TagSearchOption(SearchOption):
     def search(self):
         search_task_tag = input("Enter the task tag you want to search for: ")
 
-        # Query the database based on the user input
-        self.cursor = self.connection.execute('''
-        SELECT * FROM tasks WHERE task_tag = ?
-        ''', (search_task_tag,))
-        self.search_and_print_results()
+        self.query_DB([search_task_tag], ["task_tag"])
 
 class TimeRangeSearchOption(SearchOption):
     def search(self):
@@ -94,11 +93,7 @@ class TimeRangeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_end_time = input("Enter the end time you want to search for (HH:MM): ")
 
-        # Query the database based on the user input
-        self.cursor = self.connection.execute('''
-        SELECT * FROM tasks WHERE start_time_of_task = ? AND end_time_of_task = ?
-        ''', (search_start_time, search_end_time))
-        self.search_and_print_results()
+        self.query_DB([search_start_time, search_end_time], ["start_time_of_task","end_time_of_task"])
 
 class SearchHandler(object):
     SEARCH_OPTIONS = {
