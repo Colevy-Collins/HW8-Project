@@ -14,3 +14,8 @@ refacroring:
 
 Code smell: duplicate code Search_handler lines 30 -93
 refacroring: extract method
+
+Third round: 
+
+Code smell: SRP violation InputHandler, SearchHandler, and main uses sql methods
+refacroring: extract db class to handle db operations

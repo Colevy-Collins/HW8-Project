@@ -1,8 +1,9 @@
 import re
+from src.InputHandler import InputHandler
 
-class SearchOption:
-    def __init__(self, connection, input_verifier):
-        self.connection = connection
+class SearchOption(InputHandler):
+    def __init__(self, db_controler, input_verifier):
+        self.db_controler = db_controler
         self.input_verifier = input_verifier
         self.cursor = None
         self.to_search = []
@@ -10,7 +11,7 @@ class SearchOption:
 
     def search_and_print_results(self):
         # Fetch and print the search results
-        search_results = self.cursor.fetchall()
+        search_results = self.cursor
 
         if search_results:
             print("Search Results:")
@@ -38,7 +39,7 @@ class SearchOption:
         SELECT * FROM tasks WHERE {conditions}
         '''
 
-        self.cursor = self.connection.execute(query, tuple(self.to_search))
+        self.cursor = self.db_controler.select(query, tuple(self.to_search))
         self.search_and_print_results()
 
 
@@ -105,8 +106,8 @@ class SearchHandler(object):
         "6": TimeRangeSearchOption,
     }
 
-    def __init__(self, connection, input_verifier):
-        self.connection = connection
+    def __init__(self, db_controler, input_verifier):
+        self.db_controler = db_controler
         self.input_verifier = input_verifier
 
     def take_task(self):
@@ -125,9 +126,9 @@ class SearchHandler(object):
 
         search_option = self.SEARCH_OPTIONS.get(task_to_do)
         if search_option:
-            search_handler = search_option(self.connection, self.input_verifier)
+            search_handler = search_option(self.db_controler, self.input_verifier)
             search_handler.search()
         else:
             print("Invalid option. Please enter a valid search option.")
 
-        self.connection.close()
+        self.db_controler.close_connection()
