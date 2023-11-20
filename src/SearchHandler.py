@@ -96,6 +96,56 @@ class TimeRangeSearchOption(SearchOption):
 
         self.query_DB([search_start_time, search_end_time], ["start_time_of_task","end_time_of_task"])
 
+class DateRangeReportSearchOption(SearchOption):
+    def search(self):
+        start_date = input("Enter the start date you want to search for (YYYY-MM-DD): ")
+        while not self.input_verifier.verify_input(start_date, "date"):
+            print("Invalid date format. Please use the format YYYY-MM-DD.")
+            start_date = input("Enter the start date you want to search for (YYYY-MM-DD): ")
+
+        end_date = input("Enter the end date you want to search for (YYYY-MM-DD): ")
+        while not self.input_verifier.verify_input(end_date, "date"):
+            print("Invalid date format. Please use the format YYYY-MM-DD.")
+            end_date = input("Enter the end date you want to search for (YYYY-MM-DD): ")
+
+        query = '''SELECT * FROM tasks WHERE date_of_task BETWEEN ? AND ?'''
+
+        self.cursor = self.db_controler.select(query, (start_date, end_date))
+        
+        rows = self.cursor
+
+        if not rows:
+            print("No tasks found.")
+        else:
+            print("ID | Date       | Start Time | End Time   | Task Name    | Task Tag ")
+            print("-" * 69)
+            for row in rows:
+                print("{:<3} | {:<10} | {:<10} | {:<10} | {:<12} | {:<10}".format(row[0], row[1], row[2], row[3], row[4], row[5]))
+
+
+class TimeConsumptionReportSearchOption(SearchOption):
+    def search(self):
+        query = '''SELECT task_tag,
+               SUM(strftime('%s', end_time_of_task) - strftime('%s', start_time_of_task)) AS total_duration
+        FROM tasks
+        GROUP BY task_tag
+        ORDER BY total_duration DESC'''
+
+        self.cursor = self.db_controler.select(query)
+
+        rows = self.cursor
+
+        if not rows:
+            print("No tasks found.")
+        else:
+            print("Task Tag | Total Duration (minutes)")
+            print("-" * 40)
+            for row in rows:
+                total_duration_minutes = int(row[1]) // 60  # Convert total duration from seconds to minutes
+                print("{:<8} | {:<23}".format(row[0], total_duration_minutes))
+
+
+
 class SearchHandler(object):
     SEARCH_OPTIONS = {
         "1": DateSearchOption,
@@ -104,6 +154,8 @@ class SearchHandler(object):
         "4": NameSearchOption,
         "5": TagSearchOption,
         "6": TimeRangeSearchOption,
+        "7": DateRangeReportSearchOption,
+        "8": TimeConsumptionReportSearchOption
     }
 
     def __init__(self, db_controler, input_verifier):
@@ -118,9 +170,11 @@ class SearchHandler(object):
         print("Enter 4 to search for tasks with a certain name")
         print("Enter 5 to search for tasks with a certain tag")
         print("Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)")
+        print("Enter 7 to run a Date Range report to see what task have been complete between two dates")
+        print("Enter 8 to to run a Time Consumption report to see what task have the most time spent on them")
 
         while True:
-            task_to_do = input("What do you want to do, Enter your choice 1 - 6:")
+            task_to_do = input("What do you want to do, Enter your choice 1 - 8:")
             if self.input_verifier.verify_input(task_to_do, "search_option"):
                 break
 

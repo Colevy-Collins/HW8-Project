@@ -9,7 +9,7 @@ class UserHandler(object):
     def take_choice(self):
         print("What would you like to do.")
         print("Enter 1 to input information")
-        print("Enter 2 to search for information")
+        print("Enter 2 to search for information or run a report")
     
         while True:
             task_to_do = input("What do you want to, Enter your choice 1 - 2:")

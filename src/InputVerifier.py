@@ -23,8 +23,8 @@ class OptionVerifier:
 
 class SearchOptionVerifier:
     def verify(self, user_input):
-        if user_input not in map(str, range(1, 7)):
-            print("Invalid option. Please enter a number between 1 and 6.")
+        if user_input not in map(str, range(1, 9)):
+            print("Invalid option. Please enter a number between 1 and 8.")
             return False
         return True
 
