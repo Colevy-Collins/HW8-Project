@@ -118,7 +118,7 @@ class DateRangeReportSearchOption(SearchOption):
             print("No tasks found.")
         else:
             print("ID | Date       | Start Time | End Time   | Task Name    | Task Tag ")
-            print("-" * 69)
+            print("-" * 75)
             for row in rows:
                 print("{:<3} | {:<10} | {:<10} | {:<10} | {:<12} | {:<10}".format(row[0], row[1], row[2], row[3], row[4], row[5]))
 
