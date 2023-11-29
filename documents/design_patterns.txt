@@ -7,8 +7,12 @@ File: UserHandler.py lines: 2-29
 Date Nov 29
 Design Pattern: Mediator 
 File: main.py lines: 9 - 20
-File: UserHandler.py lines: 1 - 29
 
-Date nov 29 
+
+Date Nov 29 
 Design Pattern: Builder
 File: StoreDataHandler.py Lines 3 - 35
+
+Date Nov 29
+Design Pattern: State
+File: UserHandler.py lines: 1 - 29
