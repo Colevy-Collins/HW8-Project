@@ -1,13 +1,14 @@
 Date: Nov 29
 Design Pattern: Stratigy
-Files: InputVerifier.py lines: 3-55
-Files: SearchHandler.py lines: 4-145
-Files: UserHandler.py lines: 2-29
+File: InputVerifier.py lines: 3-55
+File: SearchHandler.py lines: 4-145
+File: UserHandler.py lines: 2-29
 
 Date Nov 29
 Design Pattern: Mediator 
-Files: main.py lines: 9 - 20
+File: main.py lines: 9 - 20
+File: UserHandler.py lines: 1 - 29
 
 Date nov 29 
 Design Pattern: Builder
-Files: StoreDataHandler.py Lines 3 - 35
+File: StoreDataHandler.py Lines 3 - 35
