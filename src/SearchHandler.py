@@ -2,29 +2,11 @@ import re
 from src.InputHandler import InputHandler
 
 class SearchOption(InputHandler):
-    def __init__(self, db_controler, input_verifier):
-        self.db_controler = db_controler
-        self.input_verifier = input_verifier
+    def __init__(self,  input_verifier):
+        super().__init__()
         self.cursor = None
         self.to_search = []
         self.db_value_name = []
-
-    def search_and_print_results(self):
-        # Fetch and print the search results
-        search_results = self.cursor
-
-        if search_results:
-            print("Search Results:")
-            for result in search_results:
-                print("ID:", result[0])
-                print("Date of Task:", result[1])
-                print("Start Time of Task:", result[2])
-                print("End Time of Task:", result[3])
-                print("Task Name:", result[4])
-                print("Task Tag:", result[5])
-                print("------------------------------")
-        else:
-            print("No results found for the search criteria.")
 
     def query_DB(self, to_search, db_value_names):
         self.to_search.extend(to_search)
@@ -40,7 +22,7 @@ class SearchOption(InputHandler):
         '''
 
         self.cursor = self.db_controler.select(query, tuple(self.to_search))
-        self.search_and_print_results()
+        return self.cursor
 
 
 class DateSearchOption(SearchOption):
@@ -50,7 +32,8 @@ class DateSearchOption(SearchOption):
             print("Invalid date format. Please use the format YYYY-MM-DD.")
             search_date = input("Enter the date you want to search for (YYYY-MM-DD): ")
 
-        self.query_DB([search_date], ["date_of_task"])
+        results = self.query_DB([search_date], ["date_of_task"])
+        return results
 
 class StartTimeSearchOption(SearchOption):
     def search(self):
@@ -59,7 +42,9 @@ class StartTimeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_time = input(f"Enter the start time you want to search for (HH:MM): ")
 
-        self.query_DB([search_time], ["start_time_of_task"])
+        results = self.query_DB([search_time], ["start_time_of_task"])
+        return results
+        
 
 class EndTimeSearchOption(SearchOption):
     def search(self):
@@ -68,19 +53,22 @@ class EndTimeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_time = input(f"Enter the end time you want to search for (HH:MM): ")
 
-        self.query_DB([search_time], ["end_time_of_task"])
+        results = self.query_DB([search_time], ["end_time_of_task"])
+        return results
 
 class NameSearchOption(SearchOption):
     def search(self):
         search_task_name = input("Enter the task name you want to search for: ")
 
-        self.query_DB([search_task_name], ["task_name"])
+        results = self.query_DB([search_task_name], ["task_name"])
+        return results
 
 class TagSearchOption(SearchOption):
     def search(self):
         search_task_tag = input("Enter the task tag you want to search for: ")
 
-        self.query_DB([search_task_tag], ["task_tag"])
+        results = self.query_DB([search_task_tag], ["task_tag"])
+        return results
 
 class TimeRangeSearchOption(SearchOption):
     def search(self):
@@ -94,59 +82,11 @@ class TimeRangeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_end_time = input("Enter the end time you want to search for (HH:MM): ")
 
-        self.query_DB([search_start_time, search_end_time], ["start_time_of_task","end_time_of_task"])
-
-class DateRangeReportSearchOption(SearchOption):
-    def search(self):
-        start_date = input("Enter the start date you want to search for (YYYY-MM-DD): ")
-        while not self.input_verifier.verify_input(start_date, "date"):
-            print("Invalid date format. Please use the format YYYY-MM-DD.")
-            start_date = input("Enter the start date you want to search for (YYYY-MM-DD): ")
-
-        end_date = input("Enter the end date you want to search for (YYYY-MM-DD): ")
-        while not self.input_verifier.verify_input(end_date, "date"):
-            print("Invalid date format. Please use the format YYYY-MM-DD.")
-            end_date = input("Enter the end date you want to search for (YYYY-MM-DD): ")
-
-        query = '''SELECT * FROM tasks WHERE date_of_task BETWEEN ? AND ?'''
-
-        self.cursor = self.db_controler.select(query, (start_date, end_date))
-        
-        rows = self.cursor
-
-        if not rows:
-            print("No tasks found.")
-        else:
-            print("ID | Date       | Start Time | End Time   | Task Name    | Task Tag ")
-            print("-" * 75)
-            for row in rows:
-                print("{:<3} | {:<10} | {:<10} | {:<10} | {:<12} | {:<10}".format(row[0], row[1], row[2], row[3], row[4], row[5]))
+        results = self.query_DB([search_start_time, search_end_time], ["start_time_of_task","end_time_of_task"])
+        return results
 
 
-class TimeConsumptionReportSearchOption(SearchOption):
-    def search(self):
-        query = '''SELECT task_tag,
-               SUM(strftime('%s', end_time_of_task) - strftime('%s', start_time_of_task)) AS total_duration
-        FROM tasks
-        GROUP BY task_tag
-        ORDER BY total_duration DESC'''
-
-        self.cursor = self.db_controler.select(query)
-
-        rows = self.cursor
-
-        if not rows:
-            print("No tasks found.")
-        else:
-            print("Task Tag | Total Duration (minutes)")
-            print("-" * 40)
-            for row in rows:
-                total_duration_minutes = int(row[1]) // 60  # Convert total duration from seconds to minutes
-                print("{:<8} | {:<23}".format(row[0], total_duration_minutes))
-
-
-
-class SearchHandler(object):
+class SearchHandler(InputHandler):
     SEARCH_OPTIONS = {
         "1": DateSearchOption,
         "2": StartTimeSearchOption,
@@ -154,35 +94,19 @@ class SearchHandler(object):
         "4": NameSearchOption,
         "5": TagSearchOption,
         "6": TimeRangeSearchOption,
-        "7": DateRangeReportSearchOption,
-        "8": TimeConsumptionReportSearchOption
     }
 
-    def __init__(self, db_controler, input_verifier):
-        self.db_controler = db_controler
-        self.input_verifier = input_verifier
-
-    def take_task(self):
-        print("What would you like to do.")
-        print("Enter 1 to search for tasks on a date")
-        print("Enter 2 to search for tasks that start at a certain time (in military time / 24 base)")
-        print("Enter 3 to search for tasks that end at a certain time (in military time / 24 base)")
-        print("Enter 4 to search for tasks with a certain name")
-        print("Enter 5 to search for tasks with a certain tag")
-        print("Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)")
-        print("Enter 7 to run a Date Range report to see what task have been complete between two dates")
-        print("Enter 8 to to run a Time Consumption report to see what task have the most time spent on them")
-
-        while True:
-            task_to_do = input("What do you want to do, Enter your choice 1 - 8:")
-            if self.input_verifier.verify_input(task_to_do, "search_option"):
-                break
+    def take_task(self, choice):
+        task_to_do = choice
 
         search_option = self.SEARCH_OPTIONS.get(task_to_do)
         if search_option:
-            search_handler = search_option(self.db_controler, self.input_verifier)
-            search_handler.search()
+            search_handler = search_option(self.input_verifier)
+            results = search_handler.search()
+            return results
         else:
             print("Invalid option. Please enter a valid search option.")
 
         self.db_controler.close_connection()
+
+        

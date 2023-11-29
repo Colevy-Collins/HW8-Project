@@ -6,7 +6,7 @@ import sqlite3
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import main
 
-@patch('builtins.input', side_effect=["2", "7", "2023-01-01", "2023-12-31"])
+@patch('builtins.input', side_effect=["3", "1", "2023-01-01", "2023-12-31"])
 
 def test_main_search_date(mock_input):
     with patch('sys.stdout', new=StringIO()) as fake_out:
@@ -20,12 +20,9 @@ def test_main_search_date(mock_input):
             "What would you like to do.",
             "Enter 1 to input information",
             "Enter 2 to search for information",
-            "Enter 1 to search for tasks on a date",
-            "Enter 2 to search for tasks that start at a certain time (in military time / 24 base)",
-            "Enter 3 to search for tasks that end at a certain time (in military time / 24 base)",
-            "Enter 4 to search for tasks with a certain name",
-            "Enter 5 to search for tasks with a certain tag",
-            "Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)",
+            "Enter 3 to run a report",
+            "Enter 1 to run a Date Range report to see what task have been complete between two dates",
+            "Enter 2 to to run a Time Consumption report to see what task have the most time spent on them",
             "ID | Date       | Start Time | End Time   | Task Name    | Task Tag ",
             "1",
             "2",

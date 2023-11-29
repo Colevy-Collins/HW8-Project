@@ -1,26 +1,51 @@
 First Round:
-Date: Nov 12th
-Commit: 390563f
 Code smell: if else line 37 to 65and 4 to 29
 refactoring: Use a state that will provide diffrent functions to users when selected
 
 Code smell: switch statment line 77 to 123
-refacroring: Use a stratigy that will switch the algorithim when prompted to. 
+refactoring: Use a stratigy that will switch the algorithim when prompted to. 
 
 Code smell: Duplicate code lines 37 to 137
 refactoring: Extract duplicate code into classes
 
 Second round:
 Date: Nov 13th
-Commit: b05d631
 Code smell: if else - User_Handler lines 22 - 25, Input_Verifyer 15 -35, Search_handler 23 - 111
-refacroring: use strategy with dictionary
+refactoring: use strategy with dictionary
 
-Code smell: duplicate code Search_handler lines 30 -93
-refacroring: extract method
+Code smell: duplicate code Search_handler lines 30 - 93
+refactoring: extract method
 
 Third round: 
 Date Nov 14th
-Commit: 5564567
 Code smell: SRP violation InputHandler, SearchHandler, and main uses sql methods
-refacroring: extract db class to handle db operations
+refactoring: extract db class to handle db operations
+
+Fourth round: 
+Date Nov 29th
+Code smell: SRP violation SearchHandler and StoreDataHandler work with the db and handle user ouput.
+refactoring: extract user oupt handleing logic and move it into user handler.
+
+Code smell: lazie method in UserHandler lines 22 - 30
+refactoring: move method body to the calling method
+
+Code smell: Improper use of inheritance, UserHandler and SearchHandler should inherit from InputHandler (duplicate code)
+refactoring: Make Userhandler a subclass of InputHandler and InputHandler has InputVerifyer 
+
+Code smell Imporper use of Aggergation involving InputVerifyer and DBHandler being aggergated into subclass instead of super (duplicate code)
+refactoring: Use use InputVerifyer and DBHandler in superclass instead of subclasses.
+
+Code smell: Userhandler has long paramiter list 
+refactoring: move duplicate objects to superclass 
+
+Code smell: uses of flag value in StoreDataHandler lines 33 - 36
+refactoring: replace flag with varible with meaningful name
+
+Code smell: class explosion from reports in the search stratigy
+refactoring: extract report feature into its own strategy
+
+Code smell: uses of flag calues in InputVerifyer lines 21 - 48
+refactoring: replace flag with varible with meaningful name
+
+Code smell: SRP violation, InputVerifyer check input and prints output
+refactoring: extract output logic and move to calling classes.

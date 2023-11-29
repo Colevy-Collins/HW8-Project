@@ -1,37 +1,42 @@
 import re
+class Verifier(object):
+    def __init__(self):
+        self.is_valid_input = False
 
-class DateVerifier:
+    def verify(self, user_input):
+        pass
+
+class DateVerifier(Verifier):
     def verify(self, user_input):
         match = re.match(r'^\d{4}-\d{2}-\d{2}$', user_input)
-        if not match:
-            print("Invalid date format. Please use the format YYYY-MM-DD.")
         return match
 
-class TimeVerifier:
+class TimeVerifier(Verifier):
     def verify(self, user_input):
         match = re.match(r'^([01]\d|2[0-3]):([0-5]\d)$', user_input)
-        if not match:
-            print("Invalid time format. Please use the format HH:MM.")
         return match
 
-class OptionVerifier:
+class OptionVerifier(Verifier):
     def verify(self, user_input):
-        if user_input not in ["1", "2"]:
-            print("Invalid option. Please enter 1 or 2.")
-            return False
-        return True
+        if user_input in ["1", "2", "3"]:
+            self.is_valid_input = True
+        return self.is_valid_input
 
-class SearchOptionVerifier:
+class SearchOptionVerifier(Verifier):
     def verify(self, user_input):
-        if user_input not in map(str, range(1, 9)):
-            print("Invalid option. Please enter a number between 1 and 8.")
-            return False
-        return True
+        if user_input in map(str, range(1, 7)):
+            self.is_valid_input = True
+        return self.is_valid_input
 
-class DefaultVerifier:
+class ReportOptionVerifier(Verifier):
     def verify(self, user_input):
-        print("Invalid input. Please try again.")
-        return False
+        if user_input in map(str, range(1, 3)):
+            self.is_valid_input = True
+        return self.is_valid_input
+
+class DefaultVerifier(Verifier):
+    def verify(self, user_input):
+        return self.is_valid_input 
 
 class InputVerifier(object):
     def __init__(self):
@@ -51,5 +56,6 @@ class InputVerifier(object):
             "time": TimeVerifier(),
             "option": OptionVerifier(),
             "search_option": SearchOptionVerifier(),
+            "report_option": ReportOptionVerifier(),
         }
         return verifiers.get(data_type, DefaultVerifier())
