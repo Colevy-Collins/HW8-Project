@@ -1,3 +1,6 @@
+First Round:
+Date: Nov 12th
+Commit: 390563f
 Code smell: if else line 37 to 65and 4 to 29
 refactoring: Use a state that will provide diffrent functions to users when selected
 
@@ -8,14 +11,16 @@ Code smell: Duplicate code lines 37 to 137
 refactoring: Extract duplicate code into classes
 
 Second round:
-
+Date: Nov 13th
+Commit: b05d631
 Code smell: if else - User_Handler lines 22 - 25, Input_Verifyer 15 -35, Search_handler 23 - 111
-refacroring:
+refacroring: use strategy with dictionary
 
 Code smell: duplicate code Search_handler lines 30 -93
 refacroring: extract method
 
 Third round: 
-
+Date Nov 14th
+Commit: 5564567
 Code smell: SRP violation InputHandler, SearchHandler, and main uses sql methods
 refacroring: extract db class to handle db operations
