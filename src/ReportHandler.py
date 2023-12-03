@@ -7,6 +7,9 @@ class ReportOption(InputHandler):
         self.to_search = []
         self.db_value_name = []
         self.report = ""
+    
+    def search(self):
+        pass
 
 class DateRangeReportOption(ReportOption):
     def search(self):
