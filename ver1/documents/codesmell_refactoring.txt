@@ -1,0 +1,22 @@
+First Round:
+Code smell: if-else block from line 37 to 65 and 4 to 29.
+Refactoring: Use a state that will provide different functions to users when selected.
+
+Code smell: switch statement from line 77 to 123.
+Refactoring: Use a strategy that will switch the algorithm when prompted.
+
+Code smell: Duplicate code from lines 37 to 137.
+Refactoring: Extract duplicate code into classes.
+
+Second Round:
+Date: Nov 13th
+Code smell: if-else in UserHandler lines 22-25, InputVerifier 15-35, Search_handler 23-111.
+Refactoring: Use a strategy with a dictionary.
+
+Code smell: Duplicate code in Search_handler lines 30-93.
+Refactoring: Extract method.
+
+Third Round:
+Date: Nov 14th
+Code smell: SRP violation in InputHandler, SearchHandler, and main using SQL methods.
+Refactoring: Extract DB class to handle DB operations.

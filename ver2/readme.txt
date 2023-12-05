@@ -1,4 +1,4 @@
-In tis project you will find a program designed to help manage time.
+In this project you will find a program designed to help manage time.
 This project can take date related to date, time, and the task that was done.
 This project can also search stored tasks based on values for each data field.
 Finally, this project can generate 2 reports, one shows all tasks complete between 2 dates.
@@ -15,3 +15,5 @@ In SearchHandler.py you will find several classes that build and send search que
 In StoreDatahandler.py you will find a class that handles the collection of input, creates a query and sends it to DBHandler.
 
 In UserHandler.py you will find a class that takes user input and progress the program according to the input.
+
+In Reporthandler.py you will find a class that shows the user information based on the report selected.
