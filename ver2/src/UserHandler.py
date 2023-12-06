@@ -18,9 +18,10 @@ class UserHandler(InputHandler):
         while True:
             task_to_do = input("What do you want to, Enter your choice 1 - 3:")
             if self.input_verifier.verify_input(task_to_do, "option"):
-                print("Invalid option. Please enter 1 - 3.")
                 self.choice = task_to_do
                 break
+            else:
+                print("Invalid option. Please enter 1 - 3.")
 
         options = {
             "1": self.input_data,
@@ -48,8 +49,9 @@ class UserHandler(InputHandler):
         while True:
             task_to_do = input("What do you want to do, Enter your choice 1 - 6:")
             if self.input_verifier.verify_input(task_to_do, "search_option"):
-                print("Invalid option. Please enter a number between 1 and 6.")
                 break
+            else:
+                print("Invalid option. Please enter a number between 1 and 6.")
 
         search_results = self.search_handler.take_task(task_to_do)
 
@@ -74,8 +76,9 @@ class UserHandler(InputHandler):
         while True:
             task_to_do = input("What do you want to do, Enter your choice 1 - 2:")
             if self.input_verifier.verify_input(task_to_do, "report_option"):
-                print("Invalid option. Please enter a number between 1 and 2.")
                 break
+            else:
+                print("Invalid option. Please enter a number between 1 and 2.")
 
         report_results = self.report_handler.take_task(task_to_do)
 
