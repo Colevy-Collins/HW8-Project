@@ -2,7 +2,7 @@ import re
 from src.InputHandler import InputHandler
 
 class SearchOption(InputHandler):
-    def __init__(self,  input_verifier):
+    def __init__(self):
         super().__init__()
         self.cursor = None
         self.to_search = []
@@ -23,14 +23,16 @@ class SearchOption(InputHandler):
 
         self.cursor = self.db_controler.select(query, tuple(self.to_search))
         return self.cursor
+    
+
 
 
 class DateSearchOption(SearchOption):
     def search(self):
-        search_date = input("Enter the date you want to search for (YYYY-MM-DD): ")
+        search_date = input("Enter the date you want to search for (YYYY/MM/DD): ")
         while not self.input_verifier.verify_input(search_date, "date"):
-            print("Invalid date format. Please use the format YYYY-MM-DD.")
-            search_date = input("Enter the date you want to search for (YYYY-MM-DD): ")
+            print("Invalid date format. Please use the format YYYY/MM/DD.")
+            search_date = input("Enter the date you want to search for (YYYY/MM/DD): ")
 
         results = self.query_DB([search_date], ["date_of_task"])
         return results
@@ -42,6 +44,13 @@ class StartTimeSearchOption(SearchOption):
             print("Invalid time format. Please use the format HH:MM.")
             search_time = input(f"Enter the start time you want to search for (HH:MM): ")
 
+        am_or_pm = input(f"Enter am or pm for your time. If you entered millitary time, please type m: ")
+        while am_or_pm.lower() != "am" and am_or_pm.lower() != "pm" and am_or_pm.lower() != "m":
+            print("Invalid input. you must enter am, pm, or m")
+            am_or_pm = input(f"Enter am or pm for your time. If you entered millitary time, please type m: ")
+
+        search_time = self.input_verifier.convert_to_24_hour_format(search_time, am_or_pm)
+
         results = self.query_DB([search_time], ["start_time_of_task"])
         return results
         
@@ -52,6 +61,13 @@ class EndTimeSearchOption(SearchOption):
         while not self.input_verifier.verify_input(search_time, "time"):
             print("Invalid time format. Please use the format HH:MM.")
             search_time = input(f"Enter the end time you want to search for (HH:MM): ")
+
+        am_or_pm = input(f"Enter am or pm for your time. If you entered millitary time, please type m: ")
+        while am_or_pm.lower() != "am" and am_or_pm.lower() != "pm" and am_or_pm.lower() != "m":
+            print("Invalid input. you must enter am, pm, or m")
+            am_or_pm = input(f"Enter am or pm for your time. If you entered millitary time, please type m: ")      
+
+        search_time = self.input_verifier.convert_to_24_hour_format(search_time, am_or_pm)  
 
         results = self.query_DB([search_time], ["end_time_of_task"])
         return results
@@ -101,7 +117,7 @@ class SearchHandler(InputHandler):
 
         search_option = self.SEARCH_OPTIONS.get(task_to_do)
         if search_option:
-            search_handler = search_option(self.input_verifier)
+            search_handler = search_option()
             results = search_handler.search()
             return results
         else:

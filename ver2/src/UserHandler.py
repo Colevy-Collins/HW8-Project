@@ -40,11 +40,11 @@ class UserHandler(InputHandler):
     def search_for_data(self):
         print("What would you like to do.")
         print("Enter 1 to search for tasks on a date")
-        print("Enter 2 to search for tasks that start at a certain time (in military time / 24 base)")
-        print("Enter 3 to search for tasks that end at a certain time (in military time / 24 base)")
+        print("Enter 2 to search for tasks that start at a certain time")
+        print("Enter 3 to search for tasks that end at a certain time")
         print("Enter 4 to search for tasks with a certain name")
         print("Enter 5 to search for tasks with a certain tag")
-        print("Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)")
+        print("Enter 6 to search for tasks with a certain start and end time")
         while True:
             task_to_do = input("What do you want to do, Enter your choice 1 - 6:")
             if self.input_verifier.verify_input(task_to_do, "search_option"):

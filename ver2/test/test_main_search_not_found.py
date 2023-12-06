@@ -21,11 +21,11 @@ def test_main_search_task_name(mock_input):
             "Enter 1 to input information",
             "Enter 2 to search for information",
             "Enter 1 to search for tasks on a date",
-            "Enter 2 to search for tasks that start at a certain time (in military time / 24 base)",
-            "Enter 3 to search for tasks that end at a certain time (in military time / 24 base)",
+            "Enter 2 to search for tasks that start at a certain time",
+            "Enter 3 to search for tasks that end at a certain time",
             "Enter 4 to search for tasks with a certain name",
             "Enter 5 to search for tasks with a certain tag",
-            "Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)",
+            "Enter 6 to search for tasks with a certain start and end time",
             "No results found for the search criteria."
         ]
 

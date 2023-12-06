@@ -6,7 +6,7 @@ import sqlite3
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import main
 
-@patch('builtins.input', side_effect=["2", "2", "12:00"])
+@patch('builtins.input', side_effect=["2", "2", "12:00", "am"])
 
 def test_main_search_start_time(mock_input):
     with patch('sys.stdout', new=StringIO()) as fake_out:
@@ -21,13 +21,13 @@ def test_main_search_start_time(mock_input):
             "Enter 1 to input information",
             "Enter 2 to search for information",
             "Enter 1 to search for tasks on a date",
-            "Enter 2 to search for tasks that start at a certain time (in military time / 24 base)",
-            "Enter 3 to search for tasks that end at a certain time (in military time / 24 base)",
+            "Enter 2 to search for tasks that start at a certain time",
+            "Enter 3 to search for tasks that end at a certain time",
             "Enter 4 to search for tasks with a certain name",
             "Enter 5 to search for tasks with a certain tag",
-            "Enter 6 to search for tasks with a certain start and end time (in military time / 24 base)",
+            "Enter 6 to search for tasks with a certain start and end time",
             "Search Results",
-            "Date of Task: 2023-11-31",
+            "Date of Task: 2023/11/31",
             "Start Time of Task: 12:00",
             "End Time of Task: 13:10",
             "Task Name: Test Task2",

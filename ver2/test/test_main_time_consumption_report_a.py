@@ -23,21 +23,21 @@ def drop_tasks_table():
         print("Error dropping tasks table:", e)
 
 
-@patch('builtins.input', side_effect=["1", "2023-10-31", "12:30", "13:30", "Test Task", "Test Tag1",
-                                      "1", "2023-10-31", "12:30", "13:30", "Test Task", "Test Tag2",
-                                      "1", "2023-10-31", "12:30", "13:30", "Test Task", "Test Tag3",
-                                      "1", "2023-11-31", "12:00", "13:10", "Test Task2", "Test Tag1",
-                                      "1", "2023-11-31", "12:00", "13:10", "Test Task2", "Test Tag2",
-                                      "1", "2023-11-31", "12:00", "13:10", "Test Task2", "Test Tag3",
-                                      "1", "2023-12-31", "12:10", "13:00", "Test Task3", "Test Tag1",
-                                      "1", "2023-12-31", "12:10", "13:00", "Test Task3", "Test Tag2",
-                                      "1", "2023-12-31", "12:10", "13:00", "Test Task3", "Test Tag3",
-                                      "1", "2023-01-31", "12:20", "13:20", "Test Task1", "Test Tag1",
-                                      "1", "2023-01-31", "12:20", "13:20", "Test Task1", "Test Tag2",
-                                      "1", "2023-01-31", "12:20", "13:20", "Test Task1", "Test Tag3",
-                                      "1", "2023-02-31", "12:40", "13:40", "Test Task4", "Test Tag1",
-                                      "1", "2023-02-31", "12:40", "13:40", "Test Task4", "Test Tag2",
-                                      "1", "2023-02-31", "12:40", "13:40", "Test Task4", "Test Tag3", "3", "2"])
+@patch('builtins.input', side_effect=["1", "2023/10/31", "12:30", "am", "13:30", "pm", "Test Task", "Test Tag1",
+                                      "1", "2023/10/31", "12:30", "am", "13:30", "pm", "Test Task", "Test Tag2",
+                                      "1", "2023/10/31", "12:30", "am", "13:30", "pm", "Test Task", "Test Tag3",
+                                      "1", "2023/11/31", "12:00", "am", "13:10", "pm", "Test Task2", "Test Tag1",
+                                      "1", "2023/11/31", "12:00", "am", "13:10", "pm", "Test Task2", "Test Tag2",
+                                      "1", "2023/11/31", "12:00", "am", "13:10", "pm", "Test Task2", "Test Tag3",
+                                      "1", "2023/12/31", "12:10", "am", "13:00", "pm", "Test Task3", "Test Tag1",
+                                      "1", "2023/12/31", "12:10", "am", "13:00", "pm", "Test Task3", "Test Tag2",
+                                      "1", "2023/12/31", "12:10", "am", "13:00", "pm", "Test Task3", "Test Tag3",
+                                      "1", "2023/01/31", "12:20", "am", "13:20", "pm", "Test Task1", "Test Tag1",
+                                      "1", "2023/01/31", "12:20", "am", "13:20", "pm", "Test Task1", "Test Tag2",
+                                      "1", "2023/01/31", "12:20", "am", "13:20", "pm", "Test Task1", "Test Tag3",
+                                      "1", "2023/02/31", "12:40", "am", "13:40", "pm", "Test Task4", "Test Tag1",
+                                      "1", "2023/02/31", "12:40", "am", "13:40", "pm", "Test Task4", "Test Tag2",
+                                      "1", "2023/02/31", "12:40", "am", "13:40", "pm", "Test Task4", "Test Tag3", "3", "2"])
 
 def test_main_search_date(mock_input):
     with patch('sys.stdout', new=StringIO()) as fake_out:

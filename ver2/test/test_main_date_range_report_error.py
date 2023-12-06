@@ -6,7 +6,7 @@ import sqlite3
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from main import main
 
-@patch('builtins.input', side_effect=["3", "1", "2022-01-01", "2022-12-31"])
+@patch('builtins.input', side_effect=["3", "1", "2022/01/01", "2022/12/31"])
 
 def test_main_search_date(mock_input):
     with patch('sys.stdout', new=StringIO()) as fake_out:

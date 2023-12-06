@@ -8,7 +8,7 @@ class Verifier(object):
 
 class DateVerifier(Verifier):
     def verify(self, user_input):
-        match = re.match(r'^\d{4}-\d{2}-\d{2}$', user_input)
+        match = re.match(r'^\d{4}/\d{2}/\d{2}$', user_input)
         return match
 
 class TimeVerifier(Verifier):
@@ -59,3 +59,17 @@ class InputVerifier(object):
             "report_option": ReportOptionVerifier(),
         }
         return verifiers.get(data_type, DefaultVerifier())
+    
+    def convert_to_24_hour_format(self, time_str, am_or_pm):
+        # Split the time string into hours and minutes
+        hours, minutes = map(int, time_str.split(':'))
+
+        # Check if it's PM and hours are less than 12
+        if am_or_pm.lower() == 'pm' and hours < 12:
+            # Add 12 to the hours
+            hours += 12
+
+        # Format the result in HH:MM format
+        new_time_str = '{:02d}:{:02d}'.format(hours % 24, minutes)
+
+        return new_time_str
