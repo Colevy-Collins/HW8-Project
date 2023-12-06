@@ -13,15 +13,15 @@ class ReportOption(InputHandler):
 
 class DateRangeReportOption(ReportOption):
     def search(self):
-        start_date = input("Enter the start date you want to search for (YYYY-MM-DD): ")
+        start_date = input("Enter the start date you want to search for (YYYY/MM/DD): ")
         while not self.input_verifier.verify_input(start_date, "date"):
-            print("Invalid date format. Please use the format YYYY-MM-DD.")
-            start_date = input("Enter the start date you want to search for (YYYY-MM-DD): ")
+            print("Invalid date format. Please use the format YYYY/MM/DD.")
+            start_date = input("Enter the start date you want to search for (YYYY/MM/DD): ")
 
-        end_date = input("Enter the end date you want to search for (YYYY-MM-DD): ")
+        end_date = input("Enter the end date you want to search for (YYYY/MM/DD): ")
         while not self.input_verifier.verify_input(end_date, "date"):
-            print("Invalid date format. Please use the format YYYY-MM-DD.")
-            end_date = input("Enter the end date you want to search for (YYYY-MM-DD): ")
+            print("Invalid date format. Please use the format YYYY/MM/DD.")
+            end_date = input("Enter the end date you want to search for (YYYY/MM/DD): ")
 
         query = '''SELECT * FROM tasks WHERE date_of_task BETWEEN ? AND ?'''
 
@@ -62,7 +62,7 @@ class TimeConsumptionReportOption(ReportOption):
             header_divider = "\n" + ("-" * 40)
             table_contents = ""
             for row in rows:
-                total_duration_minutes = int(row[1]) // 60  # Convert total duration from seconds to minutes
+                total_duration_minutes = abs(int(row[1]) // 60) # Convert total duration from seconds to minutes
                 table_contents += "\n" + ("{:<8} | {:<23}".format(row[0], total_duration_minutes))
             
             report = table_header + header_divider + table_contents
